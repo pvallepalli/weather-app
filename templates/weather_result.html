@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App - Weather Result</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="post" action="/search">
+            <input type="text" name="location" placeholder="Enter a location">
+            <input type="submit" value="Search">
+        </form>
+        {% if weather_data %}
+        <div class="weather-result">
+            <h2>Weather for {{ location }}</h2>
+            <p>Current Temperature: {{ weather_data['current_weather']['temperature'] }}°F</p>
+            <p>Current Windspeed: {{ weather_data['current_weather']['windspeed'] }} mph</p>
+            <h3>Daily Forecast:</h3>
+            <ul>
+                {% for forecast in weather_data['daily_forecast'] %}
+                <li>Date: {{ forecast['date'] }}</li>
+                <li>Max Temperature: {{ forecast['max_temp'] }}°F</li>
+                <li>Min Temperature: {{ forecast['min_temp'] }}°F</li>
+                <li>UV Index Max: {{ forecast['uv_index'] }}</li>
+                <li>Sunset: {{ forecast['sunset'] }}</li>
+                <li>Sunrise: {{ forecast['sunrise'] }}</li>
+                <br>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="error-message">
+            <p>No weather information found for {{ location }}.</p>
+        </div>
+        {% endif %}
+        <h2>Recently Searched Places:</h2>
+        <ul>
+            <!-- Display last 5 recently searched places dynamically -->
+            {% for place in recently_searched %}
+            <li>{{ place }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

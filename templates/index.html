@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="post" action="/search">
+            <input type="text" name="location" placeholder="Enter a location">
+            <input type="submit" value="Search">
+        </form>
+        <h2>Recently Searched Places:</h2>
+        <ul>
+            <!-- Display recently searched places dynamically -->
+            {% for place in recently_searched %}
+            <li>{{ place }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
